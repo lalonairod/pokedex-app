@@ -6,6 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Buffer } from 'buffer';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -13,18 +14,10 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
-    const TOKEN : string = 'poke token';
-    console.log(TOKEN);
-
-    if(TOKEN == ''){
-      return next.handle(request);
-    }
-
-    console.log(request);
-
+    
+    const TOKEN : string = Buffer.from('postman:password').toString('base64');
     const HEADER_REQUEST : HttpRequest<any> = request.clone({
-      headers : request.headers.set('Authorization', TOKEN)
+      headers : request.headers.set('Authorization', `Basic ${TOKEN}`)
     })
 
     return next.handle(HEADER_REQUEST);
