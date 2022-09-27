@@ -13,7 +13,8 @@ import { PokemonComponent } from './components/modules/pokedex/pages/pokemon/pok
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 import { AuthModule } from './components/modules/auth/auth.module';
 import { AuthRoutingModule } from './components/modules/auth/auth-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './services/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide : HTTP_INTERCEPTORS, useClass : TokenInterceptor, multi : true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
