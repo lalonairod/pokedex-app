@@ -15,20 +15,23 @@ import { AuthModule } from './components/modules/auth/auth.module';
 import { AuthRoutingModule } from './components/modules/auth/auth-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './services/interceptors/token.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
+    AppRoutingModule, 
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [
     {
-      provide : HTTP_INTERCEPTORS, useClass : TokenInterceptor, multi : true
+      provide: HTTP_INTERCEPTORS, useClass : TokenInterceptor, multi : true
     }
   ],
   bootstrap: [AppComponent]
